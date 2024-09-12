@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Libre+Caslon+Text:400,700&display=swap');
+@import '../../../../styles/variables';
+@import url('https://fonts.googleapis.com/css?family=Libre+Caslon+Text:400,700&display=swap');
+
+:host {
+  font-family: $secondary-font;
+}
+
+
+.menu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.hamburger-icon {
+  position: absolute;
+  z-index: 3;
+  top: 5vh;
+  left: 5vw;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 30px;
+}
+
+.hamburger-icon span {
+  height: 5px;
+  width: 100%;
+  background-color: black;
+  display: block;
+  transition: 0.7s ease-in-out;
+}
+
+.menu-pane {
+  background-color: #000;
+  position: fixed;
+  transform: translateX(-105vw);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  transition: 0.6s ease-in-out;
+}
+
+.menu-pane.open {
+  transform: translateX(0);
+}
+
+.menu-pane nav {
+  padding: 10%;
+}
+
+.menu-links li, a, span {
+  transition: 0.5s ease-in-out;
+}
+
+.menu-pane ul {
+  padding: 10%;
+  display: inline-block;
+}
+
+.menu-pane li {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 10px;
+  font-size: 2.5em;
+  list-style: none;
+}
+
+.menu-links li a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu-links li:hover a {
+  color: $background-color;
+}
+
+// 当菜单打开时，改变汉堡包图标的样式
+.menu-pane.open ~ .hamburger-icon span:nth-of-type(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+  background-color: white;
+}
+
+.menu-pane.open ~ .hamburger-icon span:nth-of-type(2) {
+  opacity: 0;
+}
+
+.menu-pane.open ~ .hamburger-icon span:nth-of-type(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+  background-color: white;
+}
+
+.menu-pane.open ~ .hamburger-icon span:nth-of-type(4) {
+  opacity: 0;
+}

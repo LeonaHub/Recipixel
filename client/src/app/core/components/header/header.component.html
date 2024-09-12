@@ -1,1 +1,24 @@
-<p>header works!</p>
+<div class="menu-container">
+  <button class="hamburger-icon" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu-pane" [class.open]="isMenuOpen">
+    <nav>
+      <ul class="menu-links">
+        <li><a routerLink="/" [class.active]="isActive('/')" (click)="closeMenu()">Home</a></li>
+        <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>
+        <ng-container *ngIf="!authService.isLoggedIn()">
+          <li><a routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a></li>
+          <li><a routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Register</a></li>
+        </ng-container>
+        <li *ngIf="authService.isLoggedIn()">
+          <a href="javascript:void(0)" (click)="logout(); closeMenu()">Logout</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

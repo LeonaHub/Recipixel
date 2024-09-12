@@ -6,19 +6,6 @@ services:
       dockerfile: docker/Dockerfile.client
     ports:
       - "80:80"
-    depends_on:
-      - server
-
-  server:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.server
-    ports:
-      - "5000:5000"
-    environment:
-      - MONGODB_URI=mongodb://mongo:27017/recipe_app
-    depends_on:
-      - mongo
 
   mongo:
     image: mongo
