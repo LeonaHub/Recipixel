@@ -1,0 +1,50 @@
+<div class="form-content">
+  <header>{{ isLoginMode ? 'Login' : 'Signup' }}</header>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="field input-field">
+      <input type="email" placeholder="Email" formControlName="email" class="input">
+    </div>
+
+    <div class="field input-field">
+      <input type="password" placeholder="Password" formControlName="password" class="password">
+      <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility('password')"></i>
+    </div>
+
+    <div *ngIf="!isLoginMode" class="field input-field">
+      <input type="password" placeholder="Confirm password" formControlName="confirmPassword" class="password">
+      <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility('confirmPassword')"></i>
+    </div>
+
+    <div *ngIf="isLoginMode" class="form-link">
+      <a href="#" class="forgot-pass">Forgot password?</a>
+    </div>
+
+    <div class="field button-field">
+      <button type="submit">{{ isLoginMode ? 'Login' : 'Sign up' }}</button>
+    </div>
+  </form>
+
+  <div class="form-link">
+    <span>
+      {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+      <a href="#" class="link" (click)="$event.preventDefault(); onToggleMode()">
+        {{ isLoginMode ? 'Sign up' : 'Login' }}
+      </a>
+    </span>
+  </div>
+
+  <div class="line"></div>
+
+  <div class="media-options">
+    <a href="#" class="field facebook">
+      <i class='bx bxl-facebook facebook-icon'></i>
+      <span class="facebook-text">{{ isLoginMode ? 'Login' : 'Signup' }} with Facebook</span>
+    </a>
+  </div>
+  <div class="media-options">
+    <a href="#" class="field google">
+      <img [src]="googleIconPath" alt="Google logo" class="google-img">
+      <span class="google-text">{{ isLoginMode ? 'Login' : 'Signup' }} with Google</span>
+    </a>
+  </div>
+</div>
