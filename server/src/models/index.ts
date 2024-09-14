@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import sequelize from '../config/database';
+import User from './User';
 
 
 sequelize.sync().then(() => {
@@ -8,4 +9,4 @@ sequelize.sync().then(() => {
   console.error('Error synchronizing database:', error);
 });
 
-export { sequelize };
+export { sequelize, User };
