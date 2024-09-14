@@ -2,17 +2,42 @@ version: '3'
 services:
   client:
     build:
-      context: .
-      dockerfile: docker/Dockerfile.client
+      context: ./client
+      dockerfile: Dockerfile
     ports:
       - "80:80"
+    environment:
+      - DB_HOST=postgres  # 使用服务名作为主机名
+      - DB_PORT=5433
+    depends_on:
+      - server
 
-  mongo:
-    image: mongo
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     ports:
-      - "27017:27017"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=RecipixelDB
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: RecipixelDB
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     volumes:
-      - mongo-data:/data/db
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  mongo-data:
+  postgres-data:
