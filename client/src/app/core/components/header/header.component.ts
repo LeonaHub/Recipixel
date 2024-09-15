@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
+
 export class HeaderComponent {
   private router = inject(Router);
   authService = inject(AuthService);

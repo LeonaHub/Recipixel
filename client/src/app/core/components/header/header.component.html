@@ -8,6 +8,7 @@
 
   <div class="menu-pane" [class.open]="isMenuOpen">
     <nav>
+      <button class="close-btn" (click)="closeMenu()">X</button>
       <ul class="menu-links">
         <li><a routerLink="/" [class.active]="isActive('/')" (click)="closeMenu()">Home</a></li>
         <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>

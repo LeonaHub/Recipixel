@@ -2,16 +2,16 @@
   <header>{{ isLoginMode ? 'Login' : 'Signup' }}</header>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="field input-field">
-      <input type="email" placeholder="Email" formControlName="email" class="input">
+      <input type="email" placeholder="Enter your email" formControlName="email" class="email">
     </div>
 
     <div class="field input-field">
-      <input type="password" placeholder="Password" formControlName="password" class="password">
+      <input type="password" placeholder="Enter your password" formControlName="password" class="password">
       <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility('password')"></i>
     </div>
 
     <div *ngIf="!isLoginMode" class="field input-field">
-      <input type="password" placeholder="Confirm password" formControlName="confirmPassword" class="password">
+      <input type="password" placeholder="Confirm your password" formControlName="confirmPassword" class="password">
       <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility('confirmPassword')"></i>
     </div>
 
@@ -20,7 +20,7 @@
     </div>
 
     <div class="field button-field">
-      <button type="submit">{{ isLoginMode ? 'Login' : 'Sign up' }}</button>
+      <button type="submit" (click)="onSubmit()">{{ isLoginMode ? 'Login' : 'Sign up' }}</button>
     </div>
   </form>
 
@@ -41,6 +41,7 @@
       <span class="facebook-text">{{ isLoginMode ? 'Login' : 'Signup' }} with Facebook</span>
     </a>
   </div>
+
   <div class="media-options">
     <a href="#" class="field google">
       <img [src]="googleIconPath" alt="Google logo" class="google-img">

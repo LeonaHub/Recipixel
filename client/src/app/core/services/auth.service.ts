@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
+  // Replace with actual API URL
+  private apiUrl = 'http://localhost:3000/auth';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
   private jwtHelper = new JwtHelperService();
@@ -23,6 +26,60 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  getToken(): string | null {
+    const currentUser = this.currentUserValue;
+    return currentUser ? currentUser.token : null;
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  isLoggedIn(): boolean {
+    return this.isAuthenticated();
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
+
+  register(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData).pipe(
+      tap(response => this.handleAuthentication(response))
+    );
+  }
+
+  private handleAuthentication(response: any) {
+    if (response && response.token) {
+      localStorage.setItem('currentUser', JSON.stringify(response));
+      this.currentUserSubject.next(response);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*
+
   login(username: string, password: string) {
     return this.http.post<any>('api/login', { username, password }).pipe(
       map((response) => {
@@ -35,11 +92,7 @@ export class AuthService {
     );
   }
 
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-  }
+
 
   register(username: string, email: string, password: string): Observable<any> {
     return this.http
@@ -70,25 +123,10 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): boolean {
-    const token = this.getToken();
-    // For mock API, always return true if token exists
-    return !this.jwtHelper.isTokenExpired(token);
-  }
-
-  getToken(): string | null {
-    const currentUser = this.currentUserValue;
-    return currentUser ? currentUser.token : null;
-  }
-
   getRefreshToken(): string | null {
     const currentUser = this.currentUserValue;
     return currentUser ? currentUser.refreshToken : null;
-  }
-
-  isLoggedIn(): boolean {
-    return this.isAuthenticated();
-  }
+  } */
 
   // No need for token refresh in mock API
 }
